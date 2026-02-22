@@ -84,8 +84,6 @@
 
                             if(rs2.next()){
 
-                                HttpSession session = request.getSession();
-
                                 session.setAttribute("userId", rs2.getInt("user_id"));
                                 session.setAttribute("username", rs2.getString("username"));
                                 session.setAttribute("role", rs2.getString("role"));
