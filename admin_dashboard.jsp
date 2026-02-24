@@ -1,7 +1,7 @@
 <html>
     <head>
         <title>Admin Dashboard</title>
-        <link rel="stylesheet" href="admin_dash.css?v=11">
+        <link rel="stylesheet" href="admin_dash.css?v=10">
     </head>
 
     <body>

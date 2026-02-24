@@ -1,7 +1,7 @@
 <html>
     <head>
         <title>Manage Questions</title>
-        <link rel="stylesheet" href="sub.css?v=12">
+        <link rel="stylesheet" href="manage.css?v=12">
     </head>
 
     <body>
