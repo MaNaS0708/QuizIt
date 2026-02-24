@@ -1,0 +1,66 @@
+body{
+    background:#fff;
+    color:#111;
+    margin:0;
+    font-family: Georgia,"Times New Roman",serif;
+}
+
+#page{
+    padding-top:100px;
+}
+
+#container{
+    width:420px;
+    margin:auto;
+}
+
+#card{
+    border:1px solid #111;
+    padding:40px;
+}
+
+#card h1{
+    text-align:center;
+    font-weight:500;
+    margin-bottom:30px;
+}
+
+.form-row{
+    margin-bottom:20px;
+    display:flex;
+    flex-direction:column;
+}
+
+.form-row label{
+    margin-bottom:6px;
+}
+
+.form-row input,
+.form-row select{
+    padding:8px;
+    border:1px solid #111;
+    font-family: Georgia,"Times New Roman",serif;
+}
+
+.center{
+    text-align:center;
+}
+
+.btn{
+    border:1px solid #111;
+    background:#fff;
+    padding:10px;
+    cursor:pointer;
+}
+
+.btn:hover{
+    background:#111;
+    color:#fff;
+}
+
+.error-box{
+    margin-top:20px;
+    padding:10px;
+    border:1px solid #111;
+    text-align:center;
+}

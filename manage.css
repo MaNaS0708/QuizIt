@@ -1,0 +1,87 @@
+body{
+    background:#fff;
+    color:#111;
+    margin:0;
+    font-family: Georgia,"Times New Roman",serif;
+}
+
+.page{
+    padding-top:80px;
+}
+
+.container{
+    width:760px;
+    max-width:92%;
+    margin:auto;
+    text-align:center;
+}
+
+.header h1{
+    font-size:34px;
+    font-weight:500;
+    margin-bottom:5px;
+}
+
+.header h3{
+    font-weight:400;
+    color:#555;
+    margin-bottom:30px;
+}
+
+.card{
+    border:1px solid #111;
+    padding:40px;
+    margin-bottom:30px;
+}
+
+.center-form{
+    text-align:center;
+}
+
+.center-form table{
+    margin:auto;
+}
+
+.center-form td{
+    padding:10px;
+}
+
+.center-form input[type="text"]{
+    width:320px;
+    padding:8px;
+    border:1px solid #111;
+    font-family: Georgia,"Times New Roman",serif;
+}
+
+.center-form input[type="submit"]{
+    margin:10px;
+    padding:10px 22px;
+    border:1px solid #111;
+    background:#fff;
+    font-size:16px;
+    cursor:pointer;
+}
+
+.center-form input[type="submit"]:hover{
+    background:#111;
+    color:#fff;
+}
+
+.back-wrap{
+    position:absolute;
+    top:25px;
+    left:30px;
+}
+
+.back-btn-new{
+    text-decoration:none;
+    border:1px solid #111;
+    padding:8px 18px;
+    color:#111;
+    font-size:14px;
+}
+
+.back-btn-new:hover{
+    background:#111;
+    color:#fff;
+}

@@ -1,115 +1,132 @@
 <html>
+    <head>
+        <title>Sign Up</title>
+        <link rel="stylesheet" href="auth.css?v=1">
+    </head>
+
     <body>
-        <form method="post" action="signup.jsp">
 
-            <table>
-                <tr>
-                    <td>Username:</td>
-                    <td><input type="text" name="username"/></td>
-                </tr>
-                <tr>
-                    <td>Email:</td>
-                    <td><input type="email" name="email"/></td>
-                </tr>
-                <tr>
-                    <td>Password:</td>
-                    <td><input type="password" name="password"/></td>
-                </tr>
-                <tr>
-                    <td>Confirm Password:</td>
-                    <td><input type="password" name="confirm_password"/></td>
-                </tr>
-                <tr>
-                    <td>Role:</td>
-                    <td>
-                        <select name="role">
-                            <option value="student">Student</option>
-                            <option value="admin">Admin</option>
-                        </select>
-                    </td>
-                <tr>
-                    <td colspan="2"><input type="submit" value="Sign Up"/></td>
-                </tr>
-                <tr>
-                    <td colspan="2"> Don't have an account? <a href="login.jsp">Login</a>
-                </tr>
-            </table>
+        <div id="page">
+            <div id="container">
 
-        </form>
-    </body>
+                <div id="card">
+                    <h1>Create Account</h1>
 
-    <%@ page import ="java.sql.*" %>
-    <%
-    
-        if(request.getMethod().equalsIgnoreCase("POST")) {
+                    <form method="post" action="signup.jsp">
 
-            String username = request.getParameter("username");
-            String email = request.getParameter("email");
-            String password = request.getParameter("password");
-            String confirmPassword = request.getParameter("confirm_password");
-            String role = request.getParameter("role");
+                        <div class="form-row">
+                            <label>Username</label>
+                            <input type="text" name="username" required>
+                        </div>
 
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/quizit", "root", "902440");
+                        <div class="form-row">
+                            <label>Email</label>
+                            <input type="email" name="email" required>
+                        </div>
 
-            try{
+                        <div class="form-row">
+                            <label>Password</label>
+                            <input type="password" name="password" required>
+                        </div>
 
-                if (password != null && password.equals(confirmPassword)) {
+                        <div class="form-row">
+                            <label>Confirm Password</label>
+                            <input type="password" name="confirm_password" required>
+                        </div>
 
-                    PreparedStatement ps = con.prepareStatement("Select * from users where username=? or email=?");
-                    ps.setString(1, username);
-                    ps.setString(2, email);
+                        <div class="form-row">
+                            <label>Role</label>
+                            <select name="role">
+                                <option value="student">Student</option>
+                                <option value="admin">Admin</option>
+                            </select>
+                        </div>
 
-                    ResultSet rs = ps.executeQuery();
+                        <div class="form-row center">
+                            <input type="submit" value="Sign Up" class="btn">
+                        </div>
 
-                    if (rs.next()) {
-                        out.println("Account Already Exist. Login to Continue..");
-                    }
-                    else{
+                        <div class="form-row center">
+                            Already have an account?
+                            <a href="login.jsp">Login</a>
+                        </div>
 
-                        PreparedStatement ps2 = con.prepareStatement("Insert into users (username, email, password, role) values (?, ?, ?, ?)");
-                        ps2.setString(1, username);
-                        ps2.setString(2, email);
-                        ps2.setString(3, password);
-                        ps2.setString(4, role);
+                    </form>
+                </div>
 
-                        int i = ps2.executeUpdate();
+            </div>
+        </div>
 
-                        if (i > 0) {
+        <%@ page import ="java.sql.*" %>
+        <%
+            if(request.getMethod().equalsIgnoreCase("POST")) {
 
-                            PreparedStatement ps3 = con.prepareStatement(
-                            "SELECT * FROM users WHERE username=?");
-                            ps3.setString(1, username);
-                            ResultSet rs2 = ps3.executeQuery();
+                String username = request.getParameter("username");
+                String email = request.getParameter("email");
+                String password = request.getParameter("password");
+                String confirmPassword = request.getParameter("confirm_password");
+                String role = request.getParameter("role");
 
-                            if(rs2.next()){
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/quizit", "root", "902440");
 
-                                session.setAttribute("userId", rs2.getInt("user_id"));
-                                session.setAttribute("username", rs2.getString("username"));
-                                session.setAttribute("role", rs2.getString("role"));
+                try{
 
-                                if(role.equals("admin")){
-                                    response.sendRedirect("admin_dashboard.jsp");
-                                } else {
-                                    response.sendRedirect("student_dashboard.jsp");
+                    if(password != null && password.equals(confirmPassword)) {
+
+                        PreparedStatement ps = con.prepareStatement("Select * from users where username=? or email=?");
+                        ps.setString(1, username);
+                        ps.setString(2, email);
+
+                        ResultSet rs = ps.executeQuery();
+
+                        if (rs.next()) {
+                            out.println("<div class='error-box'>Account Already Exists</div>");
+                        }
+                        else{
+
+                            PreparedStatement ps2 = con.prepareStatement("Insert into users (username, email, password, role) values (?, ?, ?, ?)");
+                            ps2.setString(1, username);
+                            ps2.setString(2, email);
+                            ps2.setString(3, password);
+                            ps2.setString(4, role);
+
+                            int i = ps2.executeUpdate();
+
+                            if (i > 0) {
+
+                                PreparedStatement ps3 = con.prepareStatement("SELECT * FROM users WHERE username=?");
+                                ps3.setString(1, username);
+                                ResultSet rs2 = ps3.executeQuery();
+
+                                if(rs2.next()){
+
+                                    session.setAttribute("userId", rs2.getInt("user_id"));
+                                    session.setAttribute("username", rs2.getString("username"));
+                                    session.setAttribute("role", rs2.getString("role"));
+
+                                    if(role.equals("admin")){
+                                        response.sendRedirect("admin_dashboard.jsp");
+                                    } else {
+                                        response.sendRedirect("student_dashboard.jsp");
+                                    }
                                 }
                             }
-                        }
-                        else {
-                            out.println("Error creating account. Please try again.");
+                            else {
+                                out.println("<div class='error-box'>Error creating account</div>");
+                            }
                         }
 
                     }
-
+                    else {
+                        out.println("<div class='error-box'>Passwords do not match</div>");
+                    }
                 }
-                else {
-                    out.println("Passwords do not match. Please try again.");
+                catch(Exception e) {
+                    out.println("<div class='error-box'>"+e.getMessage()+"</div>");
                 }
             }
-            catch(Exception e) {
-                out.println("Error: " + e.getMessage());
-            }
-        }
-    %>
+        %>
 
+    </body>
 </html>

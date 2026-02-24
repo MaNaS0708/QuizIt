@@ -1,9 +1,13 @@
 <html>
+    <head>
+        <title>Admin Dashboard</title>
+        <link rel="stylesheet" href="admin_dash.css?v=11">
+    </head>
+
     <body>
+
         <%@ page import="java.sql.*" %>
-
         <%
-
             if(session == null || session.getAttribute("role") == null 
             || !session.getAttribute("role").equals("admin")){
                 response.sendRedirect("login.jsp");
@@ -13,22 +17,29 @@
             String username = (String) session.getAttribute("username");
         %>
 
-        <h1>Welcome <%= username %></h1>
+        <div id="logoutLayer">
+            <a href="logout.jsp" class="logout-btn">Log Out</a>
+        </div>
 
-        <h2>Subjects:</h2>
+        <div id="page">
+            <div id="container">
 
-        <table>
-            <tr>
-                <td><button onclick="window.location.href='java.jsp'">Manage Java</button></td>
-                <td><button>Manage Kotlin</button></td>
-            </tr>
-            <tr>
-                <td><button>Manage Python</button></td>
-                <td><button>Manage Maths</button></td>
-            </tr>
-        </table>
+                <div id="header">
+                    <h1>Welcome <%= username %></h1>
+                    <h3>Manage Subjects</h3>
+                </div>
 
-        <button onclick="window.location.href='logout.jsp'">Log Out</button>
+                <div id="card">
+                    <div class="subject-grid">
+                        <a href="manage.jsp?subject=java" class="subject-btn">Java</a>
+                        <a href="manage.jsp?subject=kotlin" class="subject-btn">Kotlin</a>
+                        <a href="manage.jsp?subject=python" class="subject-btn">Python</a>
+                        <a href="manage.jsp?subject=maths" class="subject-btn">Maths</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
 
     </body>
 </html>

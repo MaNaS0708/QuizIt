@@ -1,24 +1,43 @@
-    <html>
-        <body>
-            <form method="post" action="login.jsp">
-                <table>
-                    <tr>
-                        <td>Username:</td>
-                        <td><input type="text" name="username"/></td>
-                    </tr>
-                    <tr>
-                        <td>Password:</td>
-                        <td><input type="password" name="password"/></td>
-                    </tr>
-                    <tr>
-                        <td><input type="submit" value="Login"/></td>
-                    </tr>
-                    <tr>
-                        <td>Don't have an account? <a href="signup.jsp">Sign Up</a></td>
-                    </tr>
-                </table>
-            </form>
-        </body>
+<html>
+    <head>
+        <title>Login</title>
+        <link rel="stylesheet" href="auth.css?v=1">
+    </head>
+
+    <body>
+
+        <div id="page">
+            <div id="container">
+
+                <div id="card">
+                    <h1>Login</h1>
+
+                    <form method="post" action="login.jsp">
+
+                        <div class="form-row">
+                            <label>Username</label>
+                            <input type="text" name="username" required>
+                        </div>
+
+                        <div class="form-row">
+                            <label>Password</label>
+                            <input type="password" name="password" required>
+                        </div>
+
+                        <div class="form-row center">
+                            <input type="submit" value="Login" class="btn">
+                        </div>
+
+                        <div class="form-row center">
+                            Don't have an account?
+                            <a href="signup.jsp">Sign Up</a>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+        </div>
 
         <%@ page import ="java.sql.*" %>
         <% 
@@ -54,16 +73,15 @@
                             }
                         } 
                         else {
-                            out.println("Invalid username or password");
+                            out.println("<div class='error-box'>Invalid username or password</div>");
                         }
                     }
-                
                     catch(Exception e) {
-                        out.println("Error: " + e.getMessage());
+                        out.println("<div class='error-box'>"+e.getMessage()+"</div>");
                     }
                 }
             }
-
         %>
 
-    </html>
+    </body>
+</html>
