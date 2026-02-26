@@ -1,10 +1,7 @@
 <html>
     <head>
-
         <title>Quiz</title>
-        <link rel="stylesheet" href="quiz.css?v=22">
-
-
+        <link rel="stylesheet" href="quiz.css?v=23">
     </head>
     <body>
 
@@ -68,6 +65,7 @@
                             int qno = 1;
                             while(rs.next()){
                                 String correct = rs.getString("correct_option");
+                                int qid = rs.getInt("question_id");
                         %>
 
                         <div class="question-block">
@@ -94,6 +92,7 @@
                             </label>
 
                             <input type="hidden" name="ans<%=qno%>" value="<%= correct %>">
+                            <input type="hidden" name="qid<%=qno%>" value="<%= qid %>">
                         </div>
 
                         <%

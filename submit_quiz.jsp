@@ -1,7 +1,7 @@
 <html>
     <head>
         <title>Quiz Result</title>
-        <link rel="stylesheet" href="quiz.css?v=4">
+        <link rel="stylesheet" href="quiz.css?v=5">
     </head>
 
     <body>
@@ -28,8 +28,6 @@
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/quizit","root","902440");
 
-            PreparedStatement ps = con.prepareStatement("insert into user_marks(user_id,subject_id,score) values(?,?,?)");
-
             for(int i=1;i<=total;i++){
                 String userAns = request.getParameter("q"+i);
                 String correctAns = request.getParameter("ans"+i);
@@ -41,6 +39,7 @@
                 }
             }
 
+            PreparedStatement ps = con.prepareStatement("insert into user_marks(user_id,subject_id,score) values(?,?,?)");
             ps.setInt(1,userId);
             ps.setInt(2,subjectId);
             ps.setInt(3,score);
@@ -54,11 +53,6 @@
             if(rsSub.next()){
                 subjectName = rsSub.getString("subject_name");
             }
-
-            PreparedStatement psQ = con.prepareStatement("select * from questions where subject_id=? order by question_id desc limit ?");
-            psQ.setInt(1, subjectId);
-            psQ.setInt(2, total);
-            ResultSet rs = psQ.executeQuery();
         %>
 
         <div id="page">
@@ -79,11 +73,18 @@
                     <br><br>
 
                     <%
-                        int qno=1;
-                        while(rs.next()){
+                        for(int qno=1; qno<=total; qno++){
 
-                            String correct = rs.getString("correct_option");
-                            String userAns = request.getParameter("q"+qno);
+                            int qid = Integer.parseInt(request.getParameter("qid"+qno));
+
+                            PreparedStatement psQ = con.prepareStatement("select * from questions where question_id=?");
+                            psQ.setInt(1, qid);
+                            ResultSet rs = psQ.executeQuery();
+
+                            if(rs.next()){
+
+                                String correct = rs.getString("correct_option");
+                                String userAns = request.getParameter("q"+qno);
                     %>
 
                     <div class="question-block">
@@ -104,10 +105,11 @@
                         <div class="<%= correct.equals("D") ? "correctOpt" : ( "D".equals(userAns) ? "wrongOpt" : "" ) %>">
                             D) <%= rs.getString("option_d") %>
                         </div>
+
                     </div>
 
                     <%
-                        qno++;
+                            }
                         }
                     %>
 
